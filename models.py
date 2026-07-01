@@ -1,4 +1,4 @@
-from __init__ import db
+from . import db
 from flask_login import UserMixin
 
 #tabel user (lupa menambahkan timestamp agar bisa menampilkan data latest attempt)

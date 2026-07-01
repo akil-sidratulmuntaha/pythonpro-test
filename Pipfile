@@ -23,10 +23,10 @@ scipy = ">=1.7.3"
 matplotlib = ">=3.4.3"
 mock = "==4.0.3"
 imageai = "*"
-torch = {version = ">=1.9.0", index = "downloadpytorch"}
-torchvision = {version = ">=0.10.0", index = "downloadpytorch"}
 python-dotenv = "*"
 huggingface-hub = {extras = ["cli"], version = "*"}
+torch = {version = "*", index = "downloadpytorch"}
+torchvision = {version = "*", index = "downloadpytorch"}
 
 [dev-packages]
 

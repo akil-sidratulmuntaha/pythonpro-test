@@ -11,16 +11,16 @@
 
     <nav class="navbar navbar-expand-lg custom-navbar navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-warning" href="{{ url_for('main.index') }}">🐍 PythonPro & AI</a>
+            <a class="navbar-brand fw-bold text-warning" href="{{ url_for('main.index') }}">🐍 Python Quiz & AI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
-                    </li>
+                    </li> -->
                     {% if current_user.is_authenticated %}
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -133,7 +133,7 @@
 
     <footer class="landing-footer text-center">
         <div class="container">
-            <p>© 2026 <strong>Python Pro Test & AI Vision Platform by Akil</strong>. All Rights Reserved.</p>
+            <p>© 2026 <strong>Python Pro Test Platform by Akil</strong>. All Rights Reserved.</p>
             <p class="footer-credits">
                 Dikembangkan menggunakan <a href="https://flask.palletsprojects.com/" target="_blank">Python Flask</a> • 
                 <a href="https://opencv.org/" target="_blank">OpenCV</a> • 

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Quiz for Python Pro Test {% endblock%}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
@@ -16,20 +17,20 @@
 
                     <div class="bg-light rounded-3 p-4 mb-4">
                         <span class="text-secondary fw-semibold d-block text-uppercase small mb-1">Your Score</span>
-                        <h1 class="display-4 fw-black text-success m-0">{{ ((score / 10) * 100) | int }}%</h1>
+                        <h1 class="display-4 fw-black text-success m-0">{{ ((score / count) * 100) | round | int }}%</h1>
                     </div>
 
                     <div class="row g-2 text-start mb-4">
                         <div class="col-6">
                             <div class="border rounded-3 p-3 text-center bg-white h-100">
                                 <small class="text-muted d-block mb-1">Personal Best</small>
-                                <span class="fw-bold text-dark fs-5">{{ ((user_high_score / 10) * 100) | int }}%</span>
+                                <span class="fw-bold text-dark fs-5">{{ ((user_high_score / count) * 100) | round | int }}%</span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="border rounded-3 p-3 text-center bg-white h-100">
                                 <small class="text-muted d-block mb-1">Global Record</small>
-                                <span class="fw-bold text-dark fs-5">{{ ((global_high_score / 10) * 100) | int }}%</span>
+                                <span class="fw-bold text-dark fs-5">{{ ((global_high_score / count) * 100) | round | int }}%</span>
                             </div>
                         </div>
                     </div>

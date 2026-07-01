@@ -1,8 +1,8 @@
 import os, cv2, random
 from flask import Blueprint, render_template, url_for, request, redirect, session, current_app, abort
 from flask_login import login_required, current_user
-from models import User, Question, Score, DetectionHistory
-from __init__ import db
+from .models import User, Question, Score, DetectionHistory
+from . import db
 from werkzeug.utils import secure_filename
 from imageai.Detection import ObjectDetection
 
@@ -122,20 +122,25 @@ def delete_question(id):
 @main.route('/quiz')
 @login_required
 def quiz():
+    count = 0
     
     selected_topic = request.args.get('topic')
 
-    bot_questions = Question.query.filter_by(topic=selected_topic).all()
+    selected_questions = Question.query.filter_by(topic=selected_topic).all()
+
+    for questions in selected_questions:
+        count += 1 
 
     global_high_score = db.session.query(db.func.max(Score.score)).filter(Score.topic==selected_topic).scalar() or 0
     user_high_score = db.session.query(db.func.max(Score.score)).filter(Score.user_id == current_user.id, Score.topic==selected_topic).scalar() or 0
 
-    return render_template('quiz.html', topic=selected_topic, questions=bot_questions, global_high_score=global_high_score, user_high_score=user_high_score, name=current_user.name)
+    return render_template('quiz.html', topic=selected_topic, questions=selected_questions, global_high_score=global_high_score, user_high_score=user_high_score, name=current_user.name, count = count)
 
 @main.route('/submit', methods=['POST'])
 @login_required
 def submit():
     score = 0
+    count = 0 
 
     #Ambil topik langsung dari form input hidden yang dikirim
     selected_topic = request.form.get('topic')
@@ -144,12 +149,14 @@ def submit():
         return "Topik tidak ditemukan", 400
 
     questions = Question.query.filter_by(topic=selected_topic).all()
+    
 
     for question in questions:
         user_answer = request.form.get(f"q{question.id}")
         if user_answer == question.correct_answer:
             score += 1
-        selected_topic = question.topic
+        count += 1
+    
 
     new_score = Score(user_id=current_user.id, topic=selected_topic, score=score)
     db.session.add(new_score)
@@ -158,7 +165,7 @@ def submit():
     global_high_score = db.session.query(db.func.max(Score.score)).filter(Score.topic==selected_topic).scalar()
     user_high_score = db.session.query(db.func.max(Score.score)).filter(Score.user_id == current_user.id, Score.topic==selected_topic).scalar()
 
-    return render_template('result.html', topic=selected_topic, score=score, global_high_score=global_high_score, user_high_score=user_high_score, user_name=current_user.name)
+    return render_template('result.html', topic=selected_topic, score=score, global_high_score=global_high_score, user_high_score=user_high_score, user_name=current_user.name, count = count)
 
 @main.route('/reset', methods=['POST'])
 @login_required

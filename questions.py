@@ -1,5 +1,5 @@
-from __init__ import db, create_app
-from models import User, Question
+from . import db
+from .models import User, Question
 from werkzeug.security import generate_password_hash
 
 #daftar pertanyaan quiz (hard data) per topik untuk di-insert ke db agar tidak perlu menginputkan satu per satu saat testing
