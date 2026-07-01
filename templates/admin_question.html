@@ -1,0 +1,178 @@
+<<<<<<< HEAD
+{% extends "base.html" %}
+{% block title %} Quiz for Python Pro Test {% endblock %}
+{% block content %}
+<div class="admin-crud-wrapper">
+    <p><a href="{{ url_for('main.profile') }}" style="color: #6c757d; text-decoration: none;">← Kembali ke Profil</a></p>
+    <h2>Halo Admin, {{ name }}! Selamat Datang di Manajemen Kuis</h2>
+
+    <div class="crud-form-card">
+        <h3>Tambah Pertanyaan Baru</h3>
+        <form action="{{ url_for('main.add_question') }}" method="POST">
+            
+            <div class="crud-form-group">
+                <label>Topik:</label>
+                <select name="topic" class="crud-select" required>
+                    <option value="bot_discord">bot_discord</option>
+                    <option value="ai_vision">ai_vision</option>
+                    <option value="flask">flask</option>
+                    <option value="nlp">nlp</option>
+                </select>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pertanyaan:</label>
+                <input type="text" name="text" class="crud-input" required>
+            </div>
+
+            <div class="crud-options-grid">
+                <div class="crud-form-group">
+                    <label>Pilihan A:</label>
+                    <input type="text" name="option_a" class="crud-input" required>
+                </div>
+                <div class="crud-form-group">
+                    <label>Pilihan B:</label>
+                    <input type="text" name="option_b" class="crud-input" required>
+                </div>
+                <div class="crud-form-group">
+                    <label>Pilihan C:</label>
+                    <input type="text" name="option_c" class="crud-input" required>
+                </div>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Jawaban Benar:</label>
+                <select name="correct_answer" class="crud-select" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-action btn-action-add">Simpan Pertanyaan</button>
+        </form>
+    </div>
+
+    <h3>Daftar Semua Pertanyaan</h3>
+    <table class="crud-table">
+        <thead>
+            <tr>
+                <th>Topik</th>
+                <th>Pertanyaan</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>Kunci</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in questions %}
+            <tr>
+                <td><strong>{{ q.topic }}</strong></td>
+                <td>{{ q.text }}</td>
+                <td>{{ q.option_a }}</td>
+                <td>{{ q.option_b }}</td>
+                <td>{{ q.option_c }}</td>
+                <td><span style="color: #28a745; font-weight: bold;">{{ q.correct_answer }}</span></td>
+                <td>
+                    <a href="{{ url_for('main.edit_question', id=q.id) }}" class="btn-action btn-action-edit">Edit</a>
+                    <form action="{{ url_for('main.delete_question', id=q.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus soal ini?');">
+                        <button type="submit" class="btn-action btn-action-delete">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+=======
+{% extends "base.html" %}
+{% block title %} Quiz for Python Pro Test {% endblock %}
+{% block content %}
+<div class="admin-crud-wrapper">
+    <p><a href="{{ url_for('main.profile') }}" style="color: #6c757d; text-decoration: none;">← Kembali ke Profil</a></p>
+    <h2>Halo Admin, {{ name }}! Selamat Datang di Manajemen Kuis</h2>
+
+    <div class="crud-form-card">
+        <h3>Tambah Pertanyaan Baru</h3>
+        <form action="{{ url_for('main.add_question') }}" method="POST">
+            
+            <div class="crud-form-group">
+                <label>Topik:</label>
+                <select name="topic" class="crud-select" required>
+                    <option value="bot_discord">bot_discord</option>
+                    <option value="ai_vision">ai_vision</option>
+                    <option value="flask">flask</option>
+                    <option value="nlp">nlp</option>
+                </select>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pertanyaan:</label>
+                <input type="text" name="text" class="crud-input" required>
+            </div>
+
+            <div class="crud-options-grid">
+                <div class="crud-form-group">
+                    <label>Pilihan A:</label>
+                    <input type="text" name="option_a" class="crud-input" required>
+                </div>
+                <div class="crud-form-group">
+                    <label>Pilihan B:</label>
+                    <input type="text" name="option_b" class="crud-input" required>
+                </div>
+                <div class="crud-form-group">
+                    <label>Pilihan C:</label>
+                    <input type="text" name="option_c" class="crud-input" required>
+                </div>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Jawaban Benar:</label>
+                <select name="correct_answer" class="crud-select" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-action btn-action-add">Simpan Pertanyaan</button>
+        </form>
+    </div>
+
+    <h3>Daftar Semua Pertanyaan</h3>
+    <table class="crud-table">
+        <thead>
+            <tr>
+                <th>Topik</th>
+                <th>Pertanyaan</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>Kunci</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in questions %}
+            <tr>
+                <td><strong>{{ q.topic }}</strong></td>
+                <td>{{ q.text }}</td>
+                <td>{{ q.option_a }}</td>
+                <td>{{ q.option_b }}</td>
+                <td>{{ q.option_c }}</td>
+                <td><span style="color: #28a745; font-weight: bold;">{{ q.correct_answer }}</span></td>
+                <td>
+                    <a href="{{ url_for('main.edit_question', id=q.id) }}" class="btn-action btn-action-edit">Edit</a>
+                    <form action="{{ url_for('main.delete_question', id=q.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus soal ini?');">
+                        <button type="submit" class="btn-action btn-action-delete">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+>>>>>>> b73cd00b7e0ae6d1410a1de57b403e897908a1fa
+{% endblock %}

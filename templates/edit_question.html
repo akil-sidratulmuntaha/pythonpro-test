@@ -1,0 +1,114 @@
+<<<<<<< HEAD
+{% extends "base.html" %}
+{% block title %} Quiz for Python Pro Test {% endblock %}
+{% block content %}
+<div class="admin-crud-wrapper" style="max-width: 750px;">
+    <div class="crud-form-card">
+        <h2>Edit Pertanyaan ID: {{ question.id }}</h2>
+        <hr style="border: 0; border-top: 1px solid #dee2e6; margin-bottom: 20px;">
+        
+        <form method="POST">
+            <div class="crud-form-group">
+                <label>Topik:</label>
+                <select name="topic" class="crud-select" required>
+                    <option value="bot_discord" {% if question.topic == 'bot_discord' %}selected{% endif %}>bot_discord</option>
+                    <option value="ai_vision" {% if question.topic == 'ai_vision' %}selected{% endif %}>ai_vision</option>
+                    <option value="flask" {% if question.topic == 'flask' %}selected{% endif %}>flask</option>
+                    <option value="nlp" {% if question.topic == 'nlp' %}selected{% endif %}>nlp</option>
+                </select>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pertanyaan:</label>
+                <input type="text" name="text" value="{{ question.text }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pilihan A:</label>
+                <input type="text" name="option_a" value="{{ question.option_a }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pilihan B:</label>
+                <input type="text" name="option_b" value="{{ question.option_b }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pilihan C:</label>
+                <input type="text" name="option_c" value="{{ question.option_c }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Jawaban Benar:</label>
+                <select name="correct_answer" class="crud-select" required>
+                    <option value="A" {% if question.correct_answer == 'A' %}selected{% endif %}>A</option>
+                    <option value="B" {% if question.correct_answer == 'B' %}selected{% endif %}>B</option>
+                    <option value="C" {% if question.correct_answer == 'C' %}selected{% endif %}>C</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <button type="submit" class="btn-action btn-action-edit" style="padding: 10px 20px;">Perbarui Pertanyaan</button>
+                <a href="{{ url_for('main.admin_questions') }}" style="margin-left: 15px; color: #6c757d; text-decoration: none; font-size: 14px;">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+=======
+{% extends "base.html" %}
+{% block title %} Quiz for Python Pro Test {% endblock %}
+{% block content %}
+<div class="admin-crud-wrapper" style="max-width: 750px;">
+    <div class="crud-form-card">
+        <h2>Edit Pertanyaan ID: {{ question.id }}</h2>
+        <hr style="border: 0; border-top: 1px solid #dee2e6; margin-bottom: 20px;">
+        
+        <form method="POST">
+            <div class="crud-form-group">
+                <label>Topik:</label>
+                <select name="topic" class="crud-select" required>
+                    <option value="bot_discord" {% if question.topic == 'bot_discord' %}selected{% endif %}>bot_discord</option>
+                    <option value="ai_vision" {% if question.topic == 'ai_vision' %}selected{% endif %}>ai_vision</option>
+                    <option value="flask" {% if question.topic == 'flask' %}selected{% endif %}>flask</option>
+                    <option value="nlp" {% if question.topic == 'nlp' %}selected{% endif %}>nlp</option>
+                </select>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pertanyaan:</label>
+                <input type="text" name="text" value="{{ question.text }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pilihan A:</label>
+                <input type="text" name="option_a" value="{{ question.option_a }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pilihan B:</label>
+                <input type="text" name="option_b" value="{{ question.option_b }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Pilihan C:</label>
+                <input type="text" name="option_c" value="{{ question.option_c }}" class="crud-input" required>
+            </div>
+
+            <div class="crud-form-group">
+                <label>Jawaban Benar:</label>
+                <select name="correct_answer" class="crud-select" required>
+                    <option value="A" {% if question.correct_answer == 'A' %}selected{% endif %}>A</option>
+                    <option value="B" {% if question.correct_answer == 'B' %}selected{% endif %}>B</option>
+                    <option value="C" {% if question.correct_answer == 'C' %}selected{% endif %}>C</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <button type="submit" class="btn-action btn-action-edit" style="padding: 10px 20px;">Perbarui Pertanyaan</button>
+                <a href="{{ url_for('main.admin_questions') }}" style="margin-left: 15px; color: #6c757d; text-decoration: none; font-size: 14px;">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+>>>>>>> b73cd00b7e0ae6d1410a1de57b403e897908a1fa
+{% endblock %}

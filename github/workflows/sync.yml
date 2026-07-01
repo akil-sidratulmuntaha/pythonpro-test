@@ -1,0 +1,24 @@
+name: Sync to Hugging Face Hub
+
+on:
+  push:
+    branches: [main] # sesuaikan jika branch utama Anda namanya 'master'
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Push to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          # Ganti 'username' dan 'nama-space' sesuai dengan akun Hugging Face Anda
+          git remote add hf https://x-token-auth:$HF_TOKEN@huggingface.co/spaces/akil92/pythonprotest
+          git push --force hf main

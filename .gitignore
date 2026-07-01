@@ -1,0 +1,24 @@
+# Python compiler cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Editor environment settings
+.vscode/
+.idea/
+.env
+
+# Database local (SQLite)
+db_quiz.sqlite
+instance/
+
+# Media Uploads & Detection Outputs
+static/uploads/*
+static/output/*
+!static/uploads/.gitkeep
+!static/output/.gitkeep
+
+# System junk files
+.DS_Store
+Thumbs.db
