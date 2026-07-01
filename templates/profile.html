@@ -10,23 +10,50 @@
     </div>
 
     <div style="margin-bottom: 40px;">
-        <h3 style="font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 15px;">📊 Statistik Pengerjaan Kuis</h3>
+        <h3 style="font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 15px;">📊 Statistik & Akses Kuis Topik</h3>
         <div class="grid-stats">
-            <div class="stat-card" style="border-top: 4px solid #007bff;">
-                <h4>Bot Discord</h4>
-                <p>{{ stats_kuis.bot_discord }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+            <!-- Card Bot Discord -->
+            <div class="stat-card" style="border-top: 4px solid #007bff; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h4>Bot Discord</h4>
+                    <p>{{ stats_kuis.bot_discord }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="{{ url_for('main.quiz', topic='bot_discord') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis Bot Discord →</a>
+                </div>
             </div>
-            <div class="stat-card" style="border-top: 4px solid #28a745;">
-                <h4>AI Vision</h4>
-                <p>{{ stats_kuis.ai_vision }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+            
+            <!-- Card AI Vision -->
+            <div class="stat-card" style="border-top: 4px solid #28a745; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h4>Computer Vision</h4>
+                    <p>{{ stats_kuis.ai_vision }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="{{ url_for('main.quiz', topic='ai_vision') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis Computer Vision→</a>
+                </div>
             </div>
-            <div class="stat-card" style="border-top: 4px solid #ffc107;">
-                <h4>Flask Web</h4>
-                <p>{{ stats_kuis.flask }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+            
+            <!-- Card Flask Web -->
+            <div class="stat-card" style="border-top: 4px solid #ffc107; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h4>Flask</h4>
+                    <p>{{ stats_kuis.flask }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="{{ url_for('main.quiz', topic='flask') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis Flask →</a>
+                </div>
             </div>
-            <div class="stat-card" style="border-top: 4px solid #dc3545;">
-                <h4>NLP</h4>
-                <p>{{ stats_kuis.nlp }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+            
+            <!-- Card NLP -->
+            <div class="stat-card" style="border-top: 4px solid #dc3545; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h4>NLP</h4>
+                    <p>{{ stats_kuis.nlp }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="{{ url_for('main.quiz', topic='nlp') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis NLP→</a>
+                </div>
             </div>
         </div>
     </div>
