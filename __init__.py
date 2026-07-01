@@ -25,16 +25,16 @@ def create_app():
     login_manager.init_app(app)
     #login_manager.login_message = "Silakan Login terlebih dahulu agar dapat mengakses halaman ini."
 
-    from .models import User
+    from models import User
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    from .main import main as main_blueprint
+    from main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    from .auth import auth as auth_blueprint
+    from auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
@@ -51,10 +51,10 @@ def create_app():
         db.drop_all()
         db.create_all()
         
-        from .models import Question
+        from models import Question
         if Question.query.first() is None:
             print("Database kuis kosong. Memulai proses pengisian data otomatis...")
-            from .questions import seed_questions
+            from questions import seed_questions
             seed_questions()
 
     return app
