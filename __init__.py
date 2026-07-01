@@ -1,13 +1,16 @@
-import os, secrets
+import os, secrets, sys
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from dotenv import load_dotenv
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 # Memuat file .env ke dalam sistem environment variabel
 load_dotenv()
 
-db = SQLAlchemy()
+from db_instance import db
 
 def create_app():
     app = Flask(__name__)
@@ -25,16 +28,16 @@ def create_app():
     login_manager.init_app(app)
     #login_manager.login_message = "Silakan Login terlebih dahulu agar dapat mengakses halaman ini."
 
-    from .models import User
+    from models import User
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    from .main import main as main_blueprint
+    from main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    from .auth import auth as auth_blueprint
+    from auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
@@ -51,10 +54,10 @@ def create_app():
         #db.drop_all()
         db.create_all()
         
-        from .models import Question
+        from models import Question
         if Question.query.first() is None:
             print("Database kuis kosong. Memulai proses pengisian data otomatis...")
-            from .questions import seed_questions
+            from questions import seed_questions
             seed_questions()
 
     return app

@@ -1,8 +1,8 @@
 import os, cv2, random
 from flask import Blueprint, render_template, url_for, request, redirect, session, current_app, abort
 from flask_login import login_required, current_user
-from .models import User, Question, Score, DetectionHistory
-from . import db
+from models import User, Question, Score, DetectionHistory
+from __init__ import db
 from werkzeug.utils import secure_filename
 from imageai.Detection import ObjectDetection
 
