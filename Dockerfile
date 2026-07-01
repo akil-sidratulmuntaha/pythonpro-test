@@ -1,5 +1,5 @@
 # 1. Gunakan image Python resmi versi ringan
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # 2. Atur direktori kerja di dalam server cloud
 WORKDIR /code
