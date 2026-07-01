@@ -166,3 +166,4 @@ def seed_questions():
                           is_admin=True
                          )
         db.session.add(admin_user)
+        db.session.commit()
