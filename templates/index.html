@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends "base.html" %}
 {% block title %} Welcome to Python Pro Test & AI Vision {% endblock %}
 {% block content %}
@@ -46,53 +45,4 @@
 
 </div>
 
-=======
-{% extends "base.html" %}
-{% block title %} Welcome to Python Pro Test & AI Vision {% endblock %}
-{% block content %}
-
-<div class="landing-wrapper">
-    
-    <div class="landing-hero">
-        <h1>Asah Skill Python & Eksplorasi AI Vision</h1>
-        <p>Platform terintegrasi untuk menguji pemahaman pemrograman Python Anda sekaligus mencoba teknologi deteksi objek mutakhir secara langsung.</p>
-        <div>
-            {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.profile') }}" class="landing-btn landing-btn-primary">Masuk ke Dashboard Saya</a>
-            {% else %}
-                <a href="{{ url_for('auth.login') }}" class="landing-btn landing-btn-primary" style="margin-right: 10px;">Mulai Uji Kemampuan</a>
-                <a href="{{ url_for('auth.signup') }}" class="landing-btn landing-btn-secondary">Daftar Akun</a>
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="landing-features-grid">
-        
-        <div class="landing-card">
-            <span class="landing-icon">📝</span>
-            <h3>Kuis Python Pro Test</h3>
-            <p>Tantang diri Anda dengan pertanyaan interaktif seputar Bot Discord, AI Vision, Pengembangan Web dengan Flask, hingga Pemrosesan Bahasa Alami (NLP).</p>
-            {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.profile') }}" class="landing-btn landing-btn-secondary landing-btn-small">Pilih Topik Kuis</a>
-            {% else %}
-                <a href="{{ url_for('auth.login') }}" class="landing-btn landing-btn-secondary landing-btn-small">Login untuk Main</a>
-            {% endif %}
-        </div>
-
-        <div class="landing-card">
-            <span class="landing-icon">👁️</span>
-            <h3>Deteksi Objek AI</h3>
-            <p>Unggah foto Anda dan saksikan kecerdasan buatan berbasis Tiny YOLOv3 mengenali berbagai macam objek di sekitar Anda secara otomatis dan real-time.</p>
-            {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.deteksi_ai') }}" class="landing-btn landing-btn-secondary landing-btn-small">Coba Deteksi AI</a>
-            {% else %}
-                <a href="{{ url_for('auth.login') }}" class="landing-btn landing-btn-secondary landing-btn-small">Login untuk Unggah</a>
-            {% endif %}
-        </div>
-
-    </div>
-
-</div>
-
->>>>>>> b73cd00b7e0ae6d1410a1de57b403e897908a1fa
 {% endblock %}

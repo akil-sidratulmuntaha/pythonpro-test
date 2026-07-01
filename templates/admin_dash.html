@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends "base.html" %}
 {% block title %} Admin Dashboard {% endblock %}
 
@@ -42,49 +41,4 @@
 
     </div>
 </div>
-=======
-{% extends "base.html" %}
-{% block title %} Admin Dashboard {% endblock %}
-
-{% block content %}
-<div class="container-fluid px-4">
-    <div class="dashboard-grid-container">
-        
-        <div class="sidebar">
-            <h2>Admin Panel</h2>
-            <a href="{{ url_for('main.admin_dashboard') }}" class="active">Dashboard</a>
-            <a href="{{ url_for('main.admin_questions') }}">Kelola Pertanyaan Kuis</a>
-            <a href="{{ url_for('main.profile') }}">Kembali ke Profil</a>
-        </div>
-
-        <div class="main-content">
-            <div class="header">
-                <h1>Dashboard Ringkasan</h1>
-                <span>Login sebagai: <strong>{{ current_user.name }}</strong></span>
-            </div>
-
-            <div class="welcome-box">
-                <h3>Selamat Datang, {{ current_user.name }}!</h3>
-                <p>Melalui panel kontrol ini, Anda dapat memantau aktivitas database kuis dan AI Vision secara real-time.</p>
-            </div>
-
-            <div class="cards-container">
-                <div class="card">
-                    <h3>Total Pengguna</h3>
-                    <p>{{ total_users }}</p>
-                </div>
-                <div class="card questions">
-                    <h3>Total Soal Kuis</h3>
-                    <p>{{ total_questions }}</p>
-                </div>
-                <div class="card ai">
-                    <h3>Riwayat Deteksi AI</h3>
-                    <p>{{ total_detections }}</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
->>>>>>> b73cd00b7e0ae6d1410a1de57b403e897908a1fa
 {% endblock %}
