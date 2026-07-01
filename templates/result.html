@@ -46,13 +46,40 @@
             </div>
 
             <div class="text-center">
-                <form action="/reset" method="post" onsubmit="return confirm('Are you sure you want to reset your highest score for this topic?');">
+                <form action="/reset" method="post" onsubmit="return konfirmasiReset(event, this);">
                     <input type="hidden" name="topic" value="{{ topic }}">
                     <button class="btn btn-link btn-sm text-danger text-decoration-none" type="submit">
                         ⚠️ Reset Highest Score
                     </button>
                 </form>
             </div>
+
+            <script>
+            function konfirmasiReset(event, form) {
+                // 1. Tahan proses submit form agar tidak langsung jalan
+                event.preventDefault(); 
+
+                // 2. Jalankan SweetAlert2
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Skor tertinggi Anda untuk topik ini akan di-reset!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545', // Warna merah (danger)
+                    cancelButtonColor: '#6c757d',  // Warna abu-abu
+                    confirmButtonText: 'Ya, Reset!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    // 3. Jika user menekan tombol 'Ya, Reset!'
+                    if (result.isConfirmed) {
+                        form.submit(); // Lanjutkan submit form ke /reset
+                    }
+                });
+
+                // Kembalikan false agar form tidak tersubmit sebelum user menekan OK
+                return false;
+            }
+            </script>
 
         </div>
     </div>
