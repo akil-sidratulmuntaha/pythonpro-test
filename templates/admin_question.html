@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Quiz for Python Pro Test {% endblock %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="admin-crud-wrapper">
     <p><a href="{{ url_for('main.profile') }}" style="color: #6c757d; text-decoration: none;">← Kembali ke Profil</a></p>
     <h2>Halo Admin, {{ name }}! Selamat Datang di Manajemen Kuis</h2>
@@ -12,10 +13,10 @@
             <div class="crud-form-group">
                 <label>Topik:</label>
                 <select name="topic" class="crud-select" required>
-                    <option value="bot_discord">bot_discord</option>
-                    <option value="ai_vision">ai_vision</option>
-                    <option value="flask">flask</option>
-                    <option value="nlp">nlp</option>
+                    <option value="bot_discord">Bot Discord</option>
+                    <option value="computer_vision">Computer Vision</option>
+                    <option value="flask">Flask</option>
+                    <option value="nlp">NLP</option>
                 </select>
             </div>
 
@@ -76,7 +77,7 @@
                 <td><span style="color: #28a745; font-weight: bold;">{{ q.correct_answer }}</span></td>
                 <td>
                     <a href="{{ url_for('main.edit_question', id=q.id) }}" class="btn-action btn-action-edit">Edit</a>
-                    <form action="{{ url_for('main.delete_question', id=q.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus soal ini?');">
+                    <form action="{{ url_for('main.delete_question', id=q.id) }}" method="post" style="display:inline;" onsubmit="return konfirmasiHapus(event, this);">
                         <button type="submit" class="btn-action btn-action-delete">Hapus</button>
                     </form>
                 </td>
@@ -84,5 +85,32 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+            function konfirmasiHapus(event, form) {
+                // 1. Tahan proses submit form agar tidak langsung jalan
+                event.preventDefault(); 
+
+                // 2. Jalankan SweetAlert2
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menghapus pertanyaan ini?',
+                    // text: "Skor tertinggi Anda untuk topik ini akan di-reset!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545', // Warna merah (danger)
+                    cancelButtonColor: '#6c757d',  // Warna abu-abu
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    // 3. Jika user menekan tombol 'Ya, Reset!'
+                    if (result.isConfirmed) {
+                        form.submit(); // Lanjutkan submit form
+                    }
+                });
+
+                // Kembalikan false agar form tidak tersubmit sebelum user menekan OK
+                return false;
+            }
+            </script>
 </div>
 {% endblock %}

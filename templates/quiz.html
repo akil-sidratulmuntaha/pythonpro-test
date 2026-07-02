@@ -14,7 +14,7 @@
     </div>
 
     <form action="/submit" method="POST">
-        <input type="hidden" name="topic" value="{{ questions[0].topic if questions else '' }}">
+        <input type="hidden" name="topic" value="{{ questions[0].topic_id if questions else '' }}">
         {% for question in questions %}
         <div class="question-card">
             <span class="question-title">{{ loop.index }}. {{ question.text }}</span>

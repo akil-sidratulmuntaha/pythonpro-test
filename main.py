@@ -1,7 +1,7 @@
 import os, cv2, random
-from flask import Blueprint, render_template, url_for, request, redirect, session, current_app, abort
+from flask import Blueprint, render_template, url_for, request, redirect, session, current_app, abort, flash
 from flask_login import login_required, current_user
-from models import User, Question, Score, DetectionHistory
+from models import User, Question, Score, DetectionHistory, Topic
 from __init__ import db
 from werkzeug.utils import secure_filename
 from imageai.Detection import ObjectDetection
@@ -16,24 +16,27 @@ def index():
 @login_required
 def profile():
     #Statistic current user mengambil kuis per topik
+    topik_bot = Topic.query.filter_by(name='bot_discord').first()
+    topik_cv = Topic.query.filter_by(name='computer_vision').first()
+    topik_flask = Topic.query.filter_by(name='flask').first()
+    topik_nlp = Topic.query.filter_by(name='nlp').first()
+
+    # 2. Statistik dihitung berdasarkan topic_id hasil pencarian di atas
     stats_kuis = {
-        'bot_discord': Score.query.filter_by(user_id=current_user.id, topic='bot_discord').count(),
-        'ai_vision': Score.query.filter_by(user_id=current_user.id, topic='ai_vision').count(),
-        'flask': Score.query.filter_by(user_id=current_user.id, topic='flask').count(),
-        'nlp': Score.query.filter_by(user_id=current_user.id, topic='nlp').count(),
+        'bot_discord': Score.query.filter_by(user_id=current_user.id, topic_id=topik_bot.id).count() if topik_bot else 0,
+        'computer_vision': Score.query.filter_by(user_id=current_user.id, topic_id=topik_cv.id).count() if topik_cv else 0,
+        'flask': Score.query.filter_by(user_id=current_user.id, topic_id=topik_flask.id).count() if topik_flask else 0,
+        'nlp': Score.query.filter_by(user_id=current_user.id, topic_id=topik_nlp.id).count() if topik_nlp else 0,
     }
     
-    #Statistic deteksi objek yang pernah dilakukan current user
-    total_deteksi = DetectionHistory.query.filter_by(user_id=current_user.id).count()
-    
-    #History file hasil deteksi yang hanya dilakukan current user
-    riwayat_deteksi = DetectionHistory.query.filter_by(user_id=current_user.id).all()
+    riwayat_deteksi = current_user.deteksi 
+    total_deteksi = len(riwayat_deteksi)
     
     return render_template('profile.html', 
                            stats_kuis=stats_kuis, 
                            total_deteksi=total_deteksi, 
                            riwayat_deteksi=riwayat_deteksi,
-                           name=current_user.name)    
+                           )    
 
 @main.route('/admin')
 @login_required
@@ -57,7 +60,7 @@ def admin_questions():
         abort(403)
         
     #Ambil dan tampilkan semua pertanyaan di dashboard admin
-    all_questions = Question.query.order_by(Question.topic).all()
+    all_questions = Question.query.order_by(Question.topic_id).all()
     return render_template('admin_question.html', questions=all_questions)
 
 @main.route('/admin/questions/add', methods=['POST'])
@@ -73,8 +76,10 @@ def add_question():
     option_c = request.form.get('option_c')
     correct_answer = request.form.get('correct_answer')
 
+    selected_topic = Topic.query.filter_by(name=topic).first()
+
     new_q = Question(
-        topic=topic,
+        topic_id=selected_topic.id,
         text=text,
         option_a=option_a,
         option_b=option_b,
@@ -83,6 +88,7 @@ def add_question():
     )
     db.session.add(new_q)
     db.session.commit()
+    flash('Pertanyaan baru berhasil ditambahkan!', 'success')
     return redirect(url_for('main.admin_questions'))
 
 
@@ -93,9 +99,11 @@ def edit_question(id):
         abort(403)
         
     question = Question.query.get_or_404(id)
+    topic = request.form.get('topic')
+    selected_topic = Topic.query.filter_by(name=topic).first()
     
     if request.method == 'POST':
-        question.topic = request.form.get('topic')
+        question.topic_id = selected_topic.id
         question.text = request.form.get('text')
         question.option_a = request.form.get('option_a')
         question.option_b = request.form.get('option_b')
@@ -103,6 +111,7 @@ def edit_question(id):
         question.correct_answer = request.form.get('correct_answer')
         
         db.session.commit()
+        flash('Pertanyaan berhasil diperbarui!', 'success')
         return redirect(url_for('main.admin_questions'))
         
     return render_template('edit_question.html', question=question)
@@ -122,17 +131,14 @@ def delete_question(id):
 @main.route('/quiz')
 @login_required
 def quiz():
-    count = 0
-    
     selected_topic = request.args.get('topic')
+    current_topic = Topic.query.filter_by(name=selected_topic).first()
+    selected_questions = Question.query.filter_by(topic_id=current_topic.id).all()
+    count = len(selected_questions)
+    print(selected_questions)
 
-    selected_questions = Question.query.filter_by(topic=selected_topic).all()
-
-    for questions in selected_questions:
-        count += 1 
-
-    global_high_score = db.session.query(db.func.max(Score.score)).filter(Score.topic==selected_topic).scalar() or 0
-    user_high_score = db.session.query(db.func.max(Score.score)).filter(Score.user_id == current_user.id, Score.topic==selected_topic).scalar() or 0
+    global_high_score = db.session.query(db.func.max(Score.score)).filter(Score.topic_id==current_topic.id).scalar() or 0
+    user_high_score = db.session.query(db.func.max(Score.score)).filter(Score.user_id == current_user.id, Score.topic_id==current_topic.id).scalar() or 0
 
     return render_template('quiz.html', topic=selected_topic, questions=selected_questions, global_high_score=global_high_score, user_high_score=user_high_score, name=current_user.name, count = count)
 
@@ -140,39 +146,40 @@ def quiz():
 @login_required
 def submit():
     score = 0
-    count = 0 
 
-    #Ambil topik langsung dari form input hidden yang dikirim
-    selected_topic = request.form.get('topic')
-    
-    if not selected_topic:
+    selected_topic_id = request.form.get('topic')
+
+    if not selected_topic_id:
         return "Topik tidak ditemukan", 400
 
-    questions = Question.query.filter_by(topic=selected_topic).all()
-    
+    current_topic = Topic.query.get(selected_topic_id)
+    if not current_topic:
+        return "Topik tidak valid", 404
 
-    for question in questions:
+    selected_questions = current_topic.quest
+    count = len(selected_questions)
+    
+    for question in selected_questions:
         user_answer = request.form.get(f"q{question.id}")
         if user_answer == question.correct_answer:
             score += 1
-        count += 1
-    
 
-    new_score = Score(user_id=current_user.id, topic=selected_topic, score=score)
+    new_score = Score(user_id=current_user.id, topic_id=current_topic.id, score=score)
     db.session.add(new_score)
     db.session.commit()
 
-    global_high_score = db.session.query(db.func.max(Score.score)).filter(Score.topic==selected_topic).scalar()
-    user_high_score = db.session.query(db.func.max(Score.score)).filter(Score.user_id == current_user.id, Score.topic==selected_topic).scalar()
+    global_high_score = db.session.query(db.func.max(Score.score)).filter(Score.topic_id==current_topic.id).scalar()
+    user_high_score = db.session.query(db.func.max(Score.score)).filter(Score.user_id == current_user.id, Score.topic_id==current_topic.id).scalar()
 
-    return render_template('result.html', topic=selected_topic, score=score, global_high_score=global_high_score, user_high_score=user_high_score, user_name=current_user.name, count = count)
+    return render_template('result.html', topic=current_topic.name, score=score, global_high_score=global_high_score, user_high_score=user_high_score, user_name=current_user.name, count = count)
 
 @main.route('/reset', methods=['POST'])
 @login_required
 def reset_highest_score():
     topic_to_del = request.form.get('topic')
+    current_topic = Topic.query.filter_by(name=topic_to_del).first()
 
-    db.session.query(Score).filter(Score.topic == topic_to_del).delete()
+    db.session.query(Score).filter(Score.topic_id == current_topic.id).delete()
     db.session.commit()
     return redirect(url_for('main.quiz', topic=topic_to_del))
 
@@ -257,7 +264,6 @@ def deteksi_ai():
                 user_id=current_user.id
             )
             db.session.add(new_detection)
-            
             db.session.commit()
 
             input_web_path = f"uploads/{filename}"

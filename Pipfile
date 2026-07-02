@@ -22,11 +22,11 @@ tqdm = "==4.64.1"
 scipy = ">=1.7.3"
 matplotlib = ">=3.4.3"
 mock = "==4.0.3"
-imageai = "*"
 python-dotenv = "*"
 huggingface-hub = {extras = ["cli"], version = "*"}
 torch = {version = "*", index = "downloadpytorch"}
 torchvision = {version = "*", index = "downloadpytorch"}
+imageai = "*"
 
 [dev-packages]
 

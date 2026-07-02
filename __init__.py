@@ -56,8 +56,8 @@ def create_app():
         
         from models import Question
         if Question.query.first() is None:
-            print("Database kuis kosong. Memulai proses pengisian data otomatis...")
-            from questions import seed_questions
-            seed_questions()
+             print("Database kuis kosong. Memulai proses pengisian data otomatis...")
+             from questions import seed_questions
+             seed_questions()
 
     return app

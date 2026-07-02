@@ -1,9 +1,8 @@
-from flask import Blueprint, render_template, url_for, request, redirect
+from flask import Blueprint, render_template, url_for, request, redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User
 from __init__ import db
 from flask_login import login_user, logout_user, login_required
-from flask import flash
 
 auth = Blueprint('auth', __name__)
 
@@ -13,10 +12,14 @@ def signup():
 
 @auth.route('/signup', methods = ['GET', 'POST'])
 def signup_post():
-    name = request.form.get('name')
     email = request.form.get('email')
+    name = request.form.get('name')
     password = request.form.get('password') 
     
+    if not email or not name or not password:
+        flash('Semua kolom pendaftaran wajib diisi dengan benar!', 'danger')
+        return redirect(url_for('auth.signup'))
+
     user = User.query.filter_by(email=email).first()
 
     if user:
@@ -27,7 +30,7 @@ def signup_post():
 
     db.session.add(new_user)
     db.session.commit()
-
+    flash('Pendaftaran berhasil! Silakan login.', 'success')
     return redirect(url_for('auth.login')) 
 
 @auth.route('/login')
