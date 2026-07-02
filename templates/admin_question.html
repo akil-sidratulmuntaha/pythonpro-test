@@ -57,6 +57,7 @@
     <table class="crud-table">
         <thead>
             <tr>
+                <th>No.</th>
                 <th>Topik</th>
                 <th>Pertanyaan</th>
                 <th>A</th>
@@ -69,7 +70,8 @@
         <tbody>
             {% for q in questions %}
             <tr>
-                <td><strong>{{ q.topic }}</strong></td>
+                <td>{{ loop.index }}</td>
+                <td><strong>{{ q.topik_rel.name }}</strong></td>
                 <td>{{ q.text }}</td>
                 <td>{{ q.option_a }}</td>
                 <td>{{ q.option_b }}</td>
