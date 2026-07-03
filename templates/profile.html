@@ -2,99 +2,117 @@
 {% block title %} Profil & Aktivitas Saya {% endblock %}
 {% block content %}
 
-<div class="profile-page-wrapper">
-    <div class="profile-header" style="text-align: center; margin-bottom: 40px; border-bottom: none !important; padding-bottom: 0 !important;">
-        <div style="font-size: 50px; margin-bottom: 10px;">👤</div>
-        <h2 style="margin: 0; font-weight: 700; color: #212529;">Selamat Datang, {{ current_user.name }}!</h2>
-        <p style="color: #6c757d; margin-top: 5px;">Pantau capaian belajar Python dan berkas deteksi AI Anda di sini.</p>
+<div class="profile-page-wrapper" style="max-width: 1100px; margin: 0 auto; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    
+    <div class="profile-header" style="text-align: center; margin-bottom: 45px; padding: 30px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div style="font-size: 60px; margin-bottom: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">👤</div>
+        <h2 style="margin: 0; font-weight: 700; color: #212529; font-size: 28px;">Selamat Datang, {{ current_user.name }}!</h2>
+        <p style="color: #6c757d; margin-top: 8px; font-size: 15px;">Pantau capaian belajar Python dan berkas deteksi AI Anda di sini.</p>
     </div>
 
-    <div style="margin-bottom: 40px;">
-        <h3 style="font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 15px;">📊 Statistik & Akses Kuis Topik</h3>
-        <div class="grid-stats">
-            <!-- Card Bot Discord -->
-            <div class="stat-card" style="border-top: 4px solid #007bff; display: flex; flex-direction: column; justify-content: space-between;">
+    <div style="margin-bottom: 45px;">
+        <h3 style="font-size: 20px; font-weight: 600; color: #343a40; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>📊</span> Statistik & Akses Kuis Topik
+        </h3>
+        
+        <div class="grid-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+            
+            <div class="stat-card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e9ecef; border-top: 5px solid #007bff; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: transform 0.2s;">
                 <div>
-                    <h4>Bot Discord</h4>
-                    <p>{{ stats_kuis.bot_discord }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                    <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">Bot Discord</h4>
+                    <p style="margin: 0; font-size: 24px; font-weight: 700; color: #007bff;">{{ stats_kuis.bot_discord }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
+                    <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
+                        ⏱️ {{ last_attempts.bot_discord }}
+                    </div>
                 </div>
-                <div style="margin-top: 15px;">
-                    <a href="{{ url_for('main.quiz', topic='bot_discord') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis Bot Discord →</a>
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('main.quiz', topic='bot_discord') }}" class="landing-btn landing-btn-secondary" style="padding: 8px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%; background: #007bff; color: #ffffff; border-radius: 6px; font-weight: 500;">Mulai Kuis →</a>
                 </div>
             </div>
             
-            <!-- Card AI Vision -->
-            <div class="stat-card" style="border-top: 4px solid #28a745; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="stat-card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e9ecef; border-top: 5px solid #28a745; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: transform 0.2s;">
                 <div>
-                    <h4>Computer Vision</h4>
-                    <p>{{ stats_kuis.ai_vision }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                    <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">Computer Vision</h4>
+                    <p style="margin: 0; font-size: 24px; font-weight: 700; color: #28a745;">{{ stats_kuis.computer_vision }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
+                    <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
+                        ⏱️ {{ last_attempts.computer_vision }}
+                    </div>
                 </div>
-                <div style="margin-top: 15px;">
-                    <a href="{{ url_for('main.quiz', topic='computer_vision') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis Computer Vision→</a>
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('main.quiz', topic='computer_vision') }}" class="landing-btn landing-btn-secondary" style="padding: 8px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%; background: #28a745; color: #ffffff; border-radius: 6px; font-weight: 500;">Mulai Kuis →</a>
                 </div>
             </div>
             
-            <!-- Card Flask Web -->
-            <div class="stat-card" style="border-top: 4px solid #ffc107; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="stat-card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e9ecef; border-top: 5px solid #ffc107; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: transform 0.2s;">
                 <div>
-                    <h4>Flask</h4>
-                    <p>{{ stats_kuis.flask }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                    <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">Flask</h4>
+                    <p style="margin: 0; font-size: 24px; font-weight: 700; color: #856404;">{{ stats_kuis.flask }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
+                    <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
+                        ⏱️ {{ last_attempts.flask }}
+                    </div>
                 </div>
-                <div style="margin-top: 15px;">
-                    <a href="{{ url_for('main.quiz', topic='flask') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis Flask →</a>
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('main.quiz', topic='flask') }}" class="landing-btn landing-btn-secondary" style="padding: 8px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%; background: #ffc107; color: #212529; border-radius: 6px; font-weight: 500;">Mulai Kuis →</a>
                 </div>
             </div>
             
-            <!-- Card NLP -->
-            <div class="stat-card" style="border-top: 4px solid #dc3545; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="stat-card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e9ecef; border-top: 5px solid #dc3545; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: transform 0.2s;">
                 <div>
-                    <h4>NLP</h4>
-                    <p>{{ stats_kuis.nlp }} <span style="font-size: 14px; font-weight: normal; color: #6c757d;">Kali</span></p>
+                    <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">NLP</h4>
+                    <p style="margin: 0; font-size: 24px; font-weight: 700; color: #dc3545;">{{ stats_kuis.nlp }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
+                    <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
+                        ⏱️ {{ last_attempts.nlp }}
+                    </div>
                 </div>
-                <div style="margin-top: 15px;">
-                    <a href="{{ url_for('main.quiz', topic='nlp') }}" class="landing-btn landing-btn-secondary" style="padding: 6px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%;">Mulai Kuis NLP→</a>
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('main.quiz', topic='nlp') }}" class="landing-btn landing-btn-secondary" style="padding: 8px 0; font-size: 13px; display: block; text-align: center; text-decoration: none; width: 100%; background: #dc3545; color: #ffffff; border-radius: 6px; font-weight: 500;">Mulai Kuis →</a>
                 </div>
             </div>
+            
         </div>
     </div>
 
-    <div style="margin-bottom: 40px;">
-        <h3 style="font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 15px;">📷 Aktivitas Vision AI</h3>
-        <div class="grid-stats" style="grid-template-columns: 1fr;">
-            <div class="stat-card ai" style="display: flex; justify-content: space-between; align-items: center; padding: 20px; text-align: left;">
-                <div>
-                    <h4 style="margin: 0;">Total Foto yang Dideteksi</h4>
-                    <p style="margin: 5px 0 0 0;">{{ total_deteksi }} <span style="font-size: 16px; font-weight: normal; color: #6c757d;">Berkas Terproses</span></p>
-                </div>
-                <div style="font-size: 35px;">🧠</div>
+    <div style="margin-bottom: 45px;">
+        <h3 style="font-size: 20px; font-weight: 600; color: #343a40; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>📷</span> Aktivitas Deteksi Objek (AI)
+        </h3>
+        <div class="stat-card ai" style="display: flex; justify-content: space-between; align-items: center; padding: 25px; background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); border-radius: 12px; box-shadow: 0 4px 15px rgba(24, 40, 72, 0.15); color: #ffffff;">
+            <div>
+                <h4 style="margin: 0; font-size: 16px; font-weight: 500; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px;">Total Foto yang Dideteksi</h4>
+                <p style="margin: 8px 0 0 0; font-size: 32px; font-weight: 700;">{{ total_deteksi }} <span style="font-size: 18px; font-weight: 400; opacity: 0.8;">Berkas Terproses</span></p>
             </div>
+            <div style="font-size: 45px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">🧠</div>
         </div>
     </div>
 
-    <div style="margin-bottom: 40px;">
-        <h3 style="font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 15px;">📂 Riwayat Gambar Hasil Deteksi AI</h3>
-        <div style="background: #ffffff; border-radius: 8px; border: 1px solid #dee2e6; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+    <div style="margin-bottom: 45px;">
+        <h3 style="font-size: 20px; font-weight: 600; color: #343a40; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>📂</span> Riwayat Gambar Hasil Deteksi Objek (AI)
+        </h3>
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e9ecef; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <table style="width: 100%; border-collapse: collapse; margin: 0;">
                 <thead>
-                    <tr style="background-color: #212529; color: white;">
-                        <th style="padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 600;">No</th>
-                        <th style="padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 600;">Nama File Gambar</th>
-                        <th style="padding: 12px 15px; text-align: center; font-size: 14px; font-weight: 600;">Aksi Berkas</th>
+                    <tr style="background-color: #f8f9fa; color: #495057; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 15px; text-align: left; font-size: 14px; font-weight: 600; width: 80px;">No</th>
+                        <th style="padding: 15px; text-align: left; font-size: 14px; font-weight: 600;">Nama File Gambar</th>
+                        <th style="padding: 15px; text-align: center; font-size: 14px; font-weight: 600; width: 220px;">Aksi Berkas</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for foto in riwayat_deteksi %}
-                    <tr style="border-bottom: 1px solid #dee2e6; transition: background-color 0.2s;">
-                        <td style="padding: 12px 15px; font-size: 14px;">{{ loop.index }}</td>
-                        <td style="padding: 12px 15px; font-size: 14px;"><code style="background: #f1f3f5; padding: 3px 6px; border-radius: 4px; color: #d63384;">{{ foto.filename }}</code></td>
-                        <td style="padding: 12px 15px; text-align: center;">
-                            <a href="{{ url_for('static', filename='output/' + foto.filename) }}" target="_blank" class="landing-btn landing-btn-secondary" style="padding: 5px 12px; font-size: 12px; margin-right: 5px;">Lihat</a>
-                            <a href="{{ url_for('static', filename='output/' + foto.filename) }}" download class="landing-btn landing-btn-primary" style="padding: 5px 12px; font-size: 12px;">Unduh</a>
+                    <tr style="border-bottom: 1px solid #e9ecef; transition: background-color 0.2s;">
+                        <td style="padding: 15px; font-size: 14px; color: #6c757d;">{{ loop.index }}</td>
+                        <td style="padding: 15px; font-size: 14px;">
+                            <code style="background: #fff0f6; padding: 4px 8px; border-radius: 6px; color: #d63384; font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; border: 1px solid #ffdeeb;">{{ foto.filename }}</code>
+                        </td>
+                        <td style="padding: 15px; text-align: center;">
+                            <a href="{{ url_for('static', filename='output/' + foto.filename) }}" target="_blank" style="padding: 6px 14px; font-size: 13px; margin-right: 8px; text-decoration: none; display: inline-block; border-radius: 6px; border: 1px solid #ced4da; color: #495057; background: #ffffff; font-weight: 500;">Lihat</a>
+                            <a href="{{ url_for('static', filename='output/' + foto.filename) }}" download style="padding: 6px 14px; font-size: 13px; text-decoration: none; display: inline-block; border-radius: 6px; color: #ffffff; background: #212529; font-weight: 500;">Unduh</a>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="3" style="text-align: center; padding: 20px; color: #6c757d; font-size: 14px;">Anda belum pernah melakukan deteksi objek.</td>
+                        <td colspan="3" style="text-align: center; padding: 35px; color: #868e96; font-size: 14px;">Anda belum pernah melakukan deteksi objek.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -103,13 +121,13 @@
     </div>
 
     {% if current_user.is_admin %}
-        <div class="admin-box-notice" style="margin-top: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
-                <span style="font-size: 20px;">🛡️</span>
-                <h4 style="margin: 0; font-weight: 600;">Menu Khusus Admin:</h4>
+        <div class="admin-box-notice" style="margin-top: 45px; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span style="font-size: 22px;">🛡️</span>
+                <h4 style="margin: 0; font-weight: 600; color: #856404; font-size: 18px;">Menu Khusus Admin:</h4>
             </div>
-            <p style="margin: 0 0 15px 0; color: #856404; font-size: 14px;">Anda memiliki hak akses penuh untuk mengelola database pertanyaan kuis dan melihat ringkasan aktivitas server.</p>
-            <a href="{{ url_for('main.admin_dashboard') }}" class="landing-btn landing-btn-secondary" style="font-size: 14px; padding: 10px 20px; text-decoration: none;">Masuk Panel Admin Control Room →</a>
+            <p style="margin: 0 0 20px 0; color: #664d03; font-size: 14.5px; line-height: 1.5;">Anda memiliki hak akses penuh untuk mengelola database pertanyaan kuis dan melihat ringkasan aktivitas server.</p>
+            <a href="{{ url_for('main.admin_dashboard') }}" style="font-size: 13px; padding: 10px 20px; text-decoration: none; background: #856404; color: #ffffff; border-radius: 6px; display: inline-block; font-weight: 500;">Masuk Panel Admin Control Room →</a>
         </div>
     {% endif %}
 </div>

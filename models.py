@@ -14,8 +14,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), nullable = False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    # Relationship antara Tabel User-Score dan Tabel User-DetectionHistory
+    # Relationship antara Tabel User-Score
     scores = db.relationship('Score', backref='peserta', cascade="all, delete-orphan", lazy=True)
+    # Relationship antara Tabel User-DetectionHistory
     deteksi = db.relationship('DetectionHistory', backref='pemilik', cascade="all, delete-orphan", lazy=True)
 
 #tabel topic

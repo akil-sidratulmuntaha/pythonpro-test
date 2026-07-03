@@ -5,6 +5,7 @@ from models import User, Question, Score, DetectionHistory, Topic
 from __init__ import db
 from werkzeug.utils import secure_filename
 from imageai.Detection import ObjectDetection
+from sqlalchemy import func
 
 main = Blueprint('main', __name__)
 
@@ -15,27 +16,44 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    #Statistic current user mengambil kuis per topik
-    topik_bot = Topic.query.filter_by(name='bot_discord').first()
-    topik_cv = Topic.query.filter_by(name='computer_vision').first()
-    topik_flask = Topic.query.filter_by(name='flask').first()
-    topik_nlp = Topic.query.filter_by(name='nlp').first()
 
-    # 2. Statistik dihitung berdasarkan topic_id hasil pencarian di atas
-    stats_kuis = {
-        'bot_discord': Score.query.filter_by(user_id=current_user.id, topic_id=topik_bot.id).count() if topik_bot else 0,
-        'computer_vision': Score.query.filter_by(user_id=current_user.id, topic_id=topik_cv.id).count() if topik_cv else 0,
-        'flask': Score.query.filter_by(user_id=current_user.id, topic_id=topik_flask.id).count() if topik_flask else 0,
-        'nlp': Score.query.filter_by(user_id=current_user.id, topic_id=topik_nlp.id).count() if topik_nlp else 0,
-    }
+    # Menghitung statistik kuis per topik
+    # stats_query = db.session.query(
+    #     Topic.name, 
+    #     func.count(Score.id).label('total_kuis')
+    # ).join(Score, Topic.id == Score.topic_id)\
+    # .filter(Score.user_id == current_user.id)\
+    # .group_by(Topic.name).all()
     
-    riwayat_deteksi = current_user.deteksi 
+    stats_query = db.session.query(
+        Topic.id,
+        Topic.name, 
+        func.count(Score.id).label('total_kuis')
+    ).outerjoin(Score, (Topic.id == Score.topic_id) & (Score.user_id == current_user.id))\
+    .group_by(Topic.name).all()
+    
+    stats_kuis = {name: total for _, name, total in stats_query}
+    topik_kuis = {name: id for id, name, _ in stats_query}
+
+    last_attempts = {}
+
+    for slug, t_id in topik_kuis.items():
+        attempt = Score.query.filter_by(user_id=current_user.id, topic_id=t_id)\
+                             .order_by(Score.date_posted.desc())\
+                             .first()
+        if attempt:
+            last_attempts[slug] = attempt.date_posted.strftime('%d %B %Y - %H:%M')
+        else:
+            last_attempts[slug] = 'N/A'
+
+    riwayat_deteksi = current_user.deteksi
     total_deteksi = len(riwayat_deteksi)
     
     return render_template('profile.html', 
                            stats_kuis=stats_kuis, 
                            total_deteksi=total_deteksi, 
                            riwayat_deteksi=riwayat_deteksi,
+                           last_attempts=last_attempts
                            )    
 
 @main.route('/admin')
