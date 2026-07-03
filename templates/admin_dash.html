@@ -8,6 +8,7 @@
         <div class="sidebar">
             <h2>Admin Panel</h2>
             <a href="{{ url_for('main.admin_dashboard') }}" class="active">Dashboard</a>
+            <a href="{{ url_for('admin_user.admin_users') }}">Kelola Pengguna</a>
             <a href="{{ url_for('main.admin_questions') }}">Kelola Pertanyaan Kuis</a>
             <a href="{{ url_for('main.profile') }}">Kembali ke Profil</a>
         </div>
@@ -20,7 +21,7 @@
 
             <div class="welcome-box">
                 <h3>Selamat Datang, {{ current_user.name }}!</h3>
-                <p>Melalui panel kontrol ini, Anda dapat memantau aktivitas database kuis dan AI Vision secara real-time.</p>
+                <p>Melalui panel kontrol ini, Anda dapat memantau aktivitas database kuis dan deteksi objek (AI) secara real-time.</p>
             </div>
 
             <div class="cards-container">

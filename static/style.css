@@ -174,8 +174,8 @@
    DESAIN HALAMAN PENGELOLA PERTANYAAN (CRUD ADMIN) & RIWAYAT USER
    ========================================================================== */
 .admin-crud-wrapper {
-    max-width: 1100px;
-    margin: 40px auto;
+    max-width: 950px;
+    margin: 20px auto;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

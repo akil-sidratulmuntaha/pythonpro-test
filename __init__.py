@@ -39,6 +39,9 @@ def create_app():
 
     from auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
+    
+    from admin_user import admin_user as admin_user_blueprint
+    app.register_blueprint(admin_user_blueprint)
 
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
     OUTPUT_FOLDER = os.path.join(app.root_path, 'static', 'output')
