@@ -18,14 +18,15 @@ class User(db.Model, UserMixin):
     scores = db.relationship('Score', backref='peserta', cascade="all, delete-orphan", lazy=True)
     deteksi = db.relationship('DetectionHistory', backref='pemilik', cascade="all, delete-orphan", lazy=True)
 
-
+#tabel topic
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False) # Contoh: "Bot Discord", "AI Vision"
+    name = db.Column(db.String(100), unique=True, nullable=False)
     
-    # Relationship antara Tabel Topic-Question dan Topic-Score
-    quest = db.relationship('Question', backref='topik_rel', cascade="all, delete-orphan", lazy=True)
-    scores = db.relationship('Score', backref='topik_rel', cascade="all, delete-orphan", lazy=True)
+    # Relationship antara Tabel Topic-Question
+    quest = db.relationship('Question', backref='topic_question_rel', cascade="all, delete-orphan", lazy=True)
+    # Relationship antara Tabel Topic-Score
+    scores = db.relationship('Score', backref='topik_score_rel', cascade="all, delete-orphan", lazy=True)
     
 #tabel pertanyaan quiz
 class Question(db.Model):
