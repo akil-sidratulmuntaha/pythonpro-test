@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Quiz for Python Pro Test {% endblock %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="admin-crud-wrapper" style="max-width: 750px;">
     <div class="crud-form-card">
         <h2>Edit Pertanyaan ID: {{ question.id }}</h2>
@@ -53,4 +54,16 @@
         </form>
     </div>
 </div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      Swal.fire({
+        title: 'Sukses',
+        text: "{{ messages[0] }}",
+        icon: 'success', // bisa diganti 'success', 'error', 'warning'
+        confirmButtonText: 'OK'
+      });
+    </script>
+  {% endif %}
+{% endwith %}
 {% endblock %}

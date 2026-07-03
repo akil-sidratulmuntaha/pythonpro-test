@@ -22,7 +22,7 @@
                     <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">Bot Discord</h4>
                     <p style="margin: 0; font-size: 24px; font-weight: 700; color: #007bff;">{{ stats_kuis.bot_discord }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
                     <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
-                        ⏱️ {{ last_attempts.bot_discord }}
+                        ⏱️ Terakhir: {{ last_attempts.bot_discord }}
                     </div>
                 </div>
                 <div style="margin-top: 20px;">
@@ -35,7 +35,7 @@
                     <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">Computer Vision</h4>
                     <p style="margin: 0; font-size: 24px; font-weight: 700; color: #28a745;">{{ stats_kuis.computer_vision }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
                     <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
-                        ⏱️ {{ last_attempts.computer_vision }}
+                        ⏱️ Terakhir: {{ last_attempts.computer_vision }}
                     </div>
                 </div>
                 <div style="margin-top: 20px;">
@@ -48,7 +48,7 @@
                     <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">Flask</h4>
                     <p style="margin: 0; font-size: 24px; font-weight: 700; color: #856404;">{{ stats_kuis.flask }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
                     <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
-                        ⏱️ {{ last_attempts.flask }}
+                        ⏱️ Terakhir: {{ last_attempts.flask }}
                     </div>
                 </div>
                 <div style="margin-top: 20px;">
@@ -61,7 +61,7 @@
                     <h4 style="margin: 0 0 10px 0; font-size: 18px; color: #212529; font-weight: 600;">NLP</h4>
                     <p style="margin: 0; font-size: 24px; font-weight: 700; color: #dc3545;">{{ stats_kuis.nlp }} <span style="font-size: 14px; font-weight: 500; color: #6c757d;">Kali</span></p>
                     <div style="font-size: 12px; color: #6c757d; margin-top: 12px; padding: 6px 8px; background: #f8f9fa; border-radius: 6px; display: inline-block;">
-                        ⏱️ {{ last_attempts.nlp }}
+                        ⏱️ Terakhir: {{ last_attempts.nlp }}
                     </div>
                 </div>
                 <div style="margin-top: 20px;">
@@ -95,6 +95,7 @@
                     <tr style="background-color: #f8f9fa; color: #495057; border-bottom: 2px solid #dee2e6;">
                         <th style="padding: 15px; text-align: left; font-size: 14px; font-weight: 600; width: 80px;">No</th>
                         <th style="padding: 15px; text-align: left; font-size: 14px; font-weight: 600;">Nama File Gambar</th>
+                        <th style="padding: 15px; text-align: left; font-size: 14px; font-weight: 600;">Tanggal Deteksi</th>
                         <th style="padding: 15px; text-align: center; font-size: 14px; font-weight: 600; width: 220px;">Aksi Berkas</th>
                     </tr>
                 </thead>
@@ -105,6 +106,7 @@
                         <td style="padding: 15px; font-size: 14px;">
                             <code style="background: #fff0f6; padding: 4px 8px; border-radius: 6px; color: #d63384; font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; border: 1px solid #ffdeeb;">{{ foto.filename }}</code>
                         </td>
+                        <td style="padding: 15px; font-size: 14px; color: #6c757d;">{{ foto.date_posted.strftime('%d %B %Y - %H:%M') }}</td>
                         <td style="padding: 15px; text-align: center;">
                             <a href="{{ url_for('static', filename='output/' + foto.filename) }}" target="_blank" style="padding: 6px 14px; font-size: 13px; margin-right: 8px; text-decoration: none; display: inline-block; border-radius: 6px; border: 1px solid #ced4da; color: #495057; background: #ffffff; font-weight: 500;">Lihat</a>
                             <a href="{{ url_for('static', filename='output/' + foto.filename) }}" download style="padding: 6px 14px; font-size: 13px; text-decoration: none; display: inline-block; border-radius: 6px; color: #ffffff; background: #212529; font-weight: 500;">Unduh</a>
@@ -112,7 +114,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="3" style="text-align: center; padding: 35px; color: #868e96; font-size: 14px;">Anda belum pernah melakukan deteksi objek.</td>
+                        <td colspan="4" style="text-align: center; padding: 35px; color: #868e96; font-size: 14px;">Anda belum pernah melakukan deteksi objek.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

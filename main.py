@@ -1,4 +1,4 @@
-import os, cv2, random
+import os, cv2
 from flask import Blueprint, render_template, url_for, request, redirect, session, current_app, abort, flash
 from flask_login import login_required, current_user
 from models import User, Question, Score, DetectionHistory, Topic
@@ -16,15 +16,7 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-
     # Menghitung statistik kuis per topik
-    # stats_query = db.session.query(
-    #     Topic.name, 
-    #     func.count(Score.id).label('total_kuis')
-    # ).join(Score, Topic.id == Score.topic_id)\
-    # .filter(Score.user_id == current_user.id)\
-    # .group_by(Topic.name).all()
-    
     stats_query = db.session.query(
         Topic.id,
         Topic.name, 
@@ -38,13 +30,13 @@ def profile():
     last_attempts = {}
 
     for slug, t_id in topik_kuis.items():
-        attempt = Score.query.filter_by(user_id=current_user.id, topic_id=t_id)\
+        quiz_attempt = Score.query.filter_by(user_id=current_user.id, topic_id=t_id)\
                              .order_by(Score.date_posted.desc())\
                              .first()
-        if attempt:
-            last_attempts[slug] = attempt.date_posted.strftime('%d %B %Y - %H:%M')
+        if quiz_attempt:
+            last_attempts[slug] = quiz_attempt.date_posted.strftime('%d %B %Y - %H:%M')
         else:
-            last_attempts[slug] = 'N/A'
+            last_attempts[slug] = 'Belum Pernah'
 
     riwayat_deteksi = current_user.deteksi
     total_deteksi = len(riwayat_deteksi)

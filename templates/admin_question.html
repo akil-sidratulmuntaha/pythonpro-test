@@ -114,5 +114,17 @@
                 return false;
             }
             </script>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      Swal.fire({
+        title: 'Sukses',
+        text: "{{ messages[0] }}",
+        icon: 'success', // bisa diganti 'success', 'error', 'warning'
+        confirmButtonText: 'OK'
+      });
+    </script>
+  {% endif %}
+{% endwith %}
 </div>
 {% endblock %}
