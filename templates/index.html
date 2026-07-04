@@ -35,7 +35,7 @@
             <h3>Deteksi Objek AI</h3>
             <p>Unggah foto Anda dan saksikan kecerdasan buatan berbasis Tiny YOLOv3 mengenali berbagai macam objek di sekitar Anda secara otomatis dan real-time.</p>
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.deteksi_ai') }}" class="landing-btn landing-btn-secondary landing-btn-small">Coba Deteksi AI</a>
+                <a href="{{ url_for('detection_bp.deteksi_ai') }}" class="landing-btn landing-btn-secondary landing-btn-small">Coba Deteksi AI</a>
             {% else %}
                 <a href="{{ url_for('auth.login') }}" class="landing-btn landing-btn-secondary landing-btn-small">Login untuk Unggah</a>
             {% endif %}

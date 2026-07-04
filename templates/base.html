@@ -25,17 +25,17 @@
                       </a>
                       <ul class="dropdown-menu">
                         <!--<li><a class="dropdown-item" href="#">User</a></li>-->
-                        <li><a class="dropdown-item" href="{{url_for('main.quiz', topic='bot_discord')}}">Bot Discord</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('quiz_bp.quiz', topic='bot_discord')}}">Bot Discord</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{url_for('main.quiz', topic='flask')}}">Flask Python</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('quiz_bp.quiz', topic='flask')}}">Flask Python</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{url_for('main.quiz', topic='computer_vision')}}">Computer Vision</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('quiz_bp.quiz', topic='computer_vision')}}">Computer Vision</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{url_for('main.quiz', topic='nlp')}}">Natural Language Processing</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('quiz_bp.quiz', topic='nlp')}}">Natural Language Processing</a></li>
                       </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.deteksi_ai') }}"><b>AI-Deteksi Objek</a></b>
+                        <a class="nav-link" href="{{ url_for('detection_bp.deteksi_ai') }}"><b>AI-Deteksi Objek</a></b>
                     </li>
                     {% endif %}
                 </ul>
@@ -61,13 +61,6 @@
                             <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Logout</a></li>
                         {% endif %}
                     </ul>
-                    <!-- {% if not current_user.is_authenticated %}
-                        <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-light">Login</a>
-                        <a href="{{ url_for('auth.signup') }}" class="btn btn-sm text-dark" style="background-color: #ffc107; font-weight: 600;">Sign Up</a>
-                    {% else %}
-                        <span class="text-light me-2" style="font-size: 18px;">Halo, <strong>{{ current_user.name }}</strong></span>
-                        <a href="{{ url_for('auth.logout') }}" class="btn btn-sm" style="background-color: #dc3545; color: white; font-weight: 600;">Logout</a>
-                    {% endif %} -->
                 </div>
             </div>
         </div>

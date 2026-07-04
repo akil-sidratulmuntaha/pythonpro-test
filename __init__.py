@@ -33,15 +33,24 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
-
-    from main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
-
-    from auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
     
-    from admin_user import admin_user as admin_user_blueprint
-    app.register_blueprint(admin_user_blueprint)
+    from main import main as main_bp
+    app.register_blueprint(main_bp)
+
+    from admin_routes import admin_bp
+    app.register_blueprint(admin_bp)
+
+    from detection_routes import detection_bp
+    app.register_blueprint(detection_bp)
+
+    from quiz_routes import quiz_bp
+    app.register_blueprint(quiz_bp)
+
+    from auth import auth as auth_bp
+    app.register_blueprint(auth_bp)
+    
+    from admin_user import admin_user as admin_user_bp
+    app.register_blueprint(admin_user_bp)
 
     UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
     OUTPUT_FOLDER = os.path.join(app.root_path, 'static', 'output')

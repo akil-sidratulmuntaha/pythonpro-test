@@ -7,9 +7,9 @@
         
         <div class="sidebar">
             <h2>Admin Panel</h2>
-            <a href="{{ url_for('main.admin_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('admin_bp.admin_dashboard') }}">Dashboard</a>
             <a href="{{ url_for('admin_user.admin_users') }}">Kelola Pengguna</a>
-            <a href="{{ url_for('main.admin_questions') }}" class="active">Kelola Pertanyaan Kuis</a>
+            <a href="{{ url_for('admin_bp.admin_questions') }}" class="active">Kelola Pertanyaan Kuis</a>
             <a href="{{ url_for('main.profile') }}">Kembali ke Profil</a>
         </div>
         
@@ -21,7 +21,7 @@
         <div class="admin-crud-wrapper">
             <div class="crud-form-card">
                 <h3>Tambah Pertanyaan Baru</h3>
-                <form action="{{ url_for('main.add_question') }}" method="POST">
+                <form action="{{ url_for('admin_bp.add_question') }}" method="POST">
                     
                     <div class="crud-form-group">
                         <label>Topik:</label>
@@ -81,9 +81,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for q in questions %}
+                    {% for q in question_pagination.items %}
                     <tr>
-                        <td>{{ loop.index }}</td>
+                        <td>{{ q.id }}</td>
                         <td><strong>{{ q.topic_question_rel.name }}</strong></td>
                         <td>{{ q.text }}</td>
                         <td>{{ q.option_a }}</td>
@@ -91,8 +91,8 @@
                         <td>{{ q.option_c }}</td>
                         <td><span style="color: #28a745; font-weight: bold;">{{ q.correct_answer }}</span></td>
                         <td>
-                            <a href="{{ url_for('main.edit_question', id=q.id) }}" class="btn-action btn-action-edit">Edit</a>
-                            <form action="{{ url_for('main.delete_question', id=q.id) }}" method="post" style="display:inline;" onsubmit="return konfirmasiHapus(event, this);">
+                            <a href="{{ url_for('admin_bp.edit_question', id=q.id) }}" class="btn-action btn-action-edit">Edit</a>
+                            <form action="{{ url_for('admin_bp.delete_question', id=q.id) }}" method="post" style="display:inline;" onsubmit="return konfirmasiHapus(event, this);">
                                 <button type="submit" class="btn-action btn-action-delete">Hapus</button>
                             </form>
                         </td>
@@ -100,6 +100,34 @@
                     {% endfor %}
                 </tbody>
             </table>
+            
+        
+            <nav aria-label="Navigasi Halaman" style="display: flex; justify-content: center; margin-top: 30px; margin-bottom: 20px;">
+                <ul class="pagination">
+                    
+                    <li class="page-item {% if not question_pagination.has_prev %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin_bp.admin_questions', page=question_pagination.prev_num) if question_pagination.has_prev else '#' }}">Previous</a>
+                    </li>
+
+                    {% for page_num in question_pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                        {% if page_num %}
+                            <li class="page-item {% if page_num == question_pagination.page %}active{% endif %}">
+                                <a class="page-link" href="{{ url_for('admin_bp.admin_questions', page=page_num) }}">{{ page_num }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    <li class="page-item {% if not question_pagination.has_next %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin_bp.admin_questions', page=question_pagination.next_num) if question_pagination.has_next else '#' }}">Next</a>
+                    </li>
+
+                </ul>
+            </nav>
+        
+
+    <!-- <p class="text-muted">Menampilkan halaman {{ question_pagination.page }} dari {{ question_pagination.pages }} halaman.</p> -->
 
             <script>
                     function konfirmasiHapus(event, form) {

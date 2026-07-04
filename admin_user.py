@@ -1,4 +1,3 @@
-import os
 from flask import Blueprint, render_template, url_for, request, redirect, flash, abort
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash

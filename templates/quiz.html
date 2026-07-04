@@ -6,7 +6,7 @@
     
     <div class="quiz-header">
         
-        <h1>{{ 'Bot Discord' if topic == 'bot_discord' else 'FLask' if topic == 'flask' else 'AI' if topic == 'ai_vision' else 'NLP' }} Quiz Begins!</h1>
+        <h1>{{ 'Bot Discord' if topic == 'bot_discord' else 'FLask' if topic == 'flask' else 'Computer Vision' if topic == 'computer_vision' else 'NLP' }} Quiz Begins!</h1>
         <div class="score-board">
             <span>🏆 Personal Highest: {{ ((user_high_score / count) * 100) | round | int }}%</span>
             <span>🌍 Overall Highest: {{ ((global_high_score / count) * 100) | round | int }}%</span>
