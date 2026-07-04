@@ -56,17 +56,27 @@ def edit_user(id):
     if request.method == 'POST':
         user.email = request.form.get('email')
         user.name = request.form.get('name')
-        user.is_admin = True if request.form.get('is_admin') == 'on' else False
+        if user.id != current_user.id:
+            user.is_admin = True if request.form.get('is_admin') == 'on' else False
+            ada_peringatan = False
+        else:
+            # Jika mengedit diri sendiri, paksa tetap True agar tidak kehilangan akses
+            if request.form.get('is_admin') != 'on':
+                flash('Tidak bisa menghilangkan akses diri sendiri sebagai admin!', 'error')
+                ada_peringatan = True
+            user.is_admin = True
         
         new_password = request.form.get('password')
         if new_password:
             user.password = generate_password_hash(new_password, method='scrypt')
             
         db.session.commit()
-        flash('Data pengguna berhasil diperbarui!', 'success')
+
+        if not ada_peringatan:
+            flash('Data pengguna berhasil diperbarui!', 'success')
         return redirect(url_for('admin_user.admin_users'))
         
-    return render_template('edit_user.html', user=user)
+    return render_template('edit_users.html', user=user)
 
 @admin_user.route('/admin/users/delete/<int:id>', methods=['POST'])
 @login_required

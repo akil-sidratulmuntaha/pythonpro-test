@@ -2,13 +2,14 @@
 {% block title %} Edit User {% endblock %}
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="container-fluid px-4">
     <div class="dashboard-grid-container">
         
         <div class="sidebar">
             <h2>Admin Panel</h2>
             <a href="{{ url_for('main.admin_dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('main.admin_users') }}" class="active">Kelola Pengguna</a>
+            <a href="{{ url_for('admin_user.admin_users') }}" class="active">Kelola Pengguna</a>
             <a href="{{ url_for('main.admin_questions') }}">Kelola Pertanyaan Kuis</a>
             <a href="{{ url_for('main.profile') }}">Kembali ke Profil</a>
         </div>
@@ -20,7 +21,7 @@
 
             <div class="welcome-box">
                 <h3>Ubah Informasi untuk: {{ user.name }}</h3>
-                <form action="{{ url_for('main.edit_user', id=user.id) }}" method="POST" style="margin-top: 15px;">
+                <form action="{{ url_for('admin_user.edit_user', id=user.id) }}" method="POST" style="margin-top: 15px;">
                     
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nama Lengkap</label>
@@ -45,12 +46,62 @@
                     
                     <div style="display: flex; gap: 10px;">
                         <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Perbarui Data</button>
-                        <a href="{{ url_for('main.admin_users') }}" style="background-color: #6c757d; color: white; text-decoration: none; padding: 10px 15px; border-radius: 4px; text-align: center;">Batal</a>
+                        <a href="{{ url_for('admin_user.admin_users') }}" style="background-color: #6c757d; color: white; text-decoration: none; padding: 10px 15px; border-radius: 4px; text-align: center;">Batal</a>
                     </div>
                 </form>
             </div>
         </div>
 
     </div>
+<div id="flash-messages-data" style="display: none;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <span class="flash-item" data-category="{{ category }}" data-message="{{ message }}"></span>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ambil semua elemen span yang berisi pesan flash
+    const flashItems = document.querySelectorAll('.flash-item');
+    
+    // Fungsi untuk memunculkan alert satu per satu secara berurutan (Antrean/Queue)
+    async function tampilkanAlertBerurutan() {
+        for (const item of flashItems) {
+            const kategori = item.getAttribute('data-category');
+            const pesan = item.getAttribute('data-message');
+            
+            // Tentukan judul dan ikon SweetAlert berdasarkan kategori Flask
+            let judulAlert = 'Sukses';
+            let ikonAlert = 'success';
+            
+            if (kategori === 'error' || kategori === 'danger') {
+                judulAlert = 'Perhatian';
+                ikonAlert = 'error';
+            } else if (kategori === 'warning') {
+                judulAlert = 'Peringatan';
+                ikonAlert = 'warning';
+            }
+
+            // Jalankan SweetAlert dan tunggu sampai user menekan tombol 'OK' sebelum lanjut ke pesan berikutnya
+            await Swal.fire({
+                title: judulAlert,
+                text: pesan,
+                icon: ikonAlert,
+                confirmButtonText: 'OK',
+                confirmButtonColor: kategori === 'success' ? '#28a745' : '#dc3545'
+            });
+        }
+    }
+
+    // Jalankan antrean alert jika ada pesan flash
+    if (flashItems.length > 0) {
+        tampilkanAlertBerurutan();
+    }
+});
+</script>
 </div>
 {% endblock %}
